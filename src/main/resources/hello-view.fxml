@@ -1,42 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox spacing="10" alignment="CENTER" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.matv.ui.ClientController">
+<HBox spacing="15" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.matv.ui.ProductController">
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets bottom="15" left="15" right="15" top="15" />
     </padding>
 
-    <Label text="Список клиентов" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
+        <Label style="-fx-font-weight: bold;" text="Каталог таваров" />
+        <TableView fx:id="productTable" VBox.vgrow="ALWAYS">
+            <columnResizePolicy><TableView fx:constant="CONSTRAINED_RESIZE_POLICY" /></columnResizePolicy>
+            <columns>
+                <TableColumn fx:id="colName" text="Название" />
+                <TableColumn fx:id="colPrice" text="Цена" />
+                <TableColumn fx:id="colStock" text="Склад" />
+                <TableColumn fx:id="colCategoryId" text="ID Категории" />
+                <TableColumn fx:id="colState" prefWidth="120" text="Состояние" />
+            </columns>
+        </TableView>
 
-    <TableView fx:id="clientTable" VBox.vgrow="ALWAYS">
-        <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-        </columnResizePolicy>
+        <Label style="-fx-font-weight: bold;" text="Информация о категории" />
+        <ListView fx:id="hierarchyListView" prefHeight="150" />
+    </VBox>
 
-        <columns>
-            <TableColumn fx:id="colSurname" text="Фамилия" />
-            <TableColumn fx:id="colName" text="Имя" />
-            <TableColumn fx:id="colPatronymic" text="Отчество" />
-            <TableColumn fx:id="colPhone" text="Телефон" />
-        </columns>
-    </TableView>
+    <VBox alignment="BOTTOM_CENTER" minWidth="250" prefWidth="250" spacing="15">
 
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Обновить список" onAction="#handleRefresh"/>
-        <Label fx:id="lblCount" text="Общее число клиентов: 0"/> </HBox>
+        <VBox spacing="8" VBox.vgrow="ALWAYS">
+            <Label style="-fx-font-weight: bold;" text="Данные товара" />
+         <Label text="Название товара" />
+            <TextField fx:id="txtName" promptText="Название товара" />
+         <Label text="Цена" />
+            <TextField fx:id="txtPrice" promptText="Цена" />
+         <Label text="Количество" />
+            <TextField fx:id="txtStock" promptText="Количество на складе" />
+         <Label text="ID категории" />
+            <TextField fx:id="txtCategoryId" promptText="ID Категории" />
 
-    <Separator/>
+            <Button maxWidth="Infinity" onAction="#handleAddLocal" text="Добавить" />
+            <Button maxWidth="Infinity" onAction="#handleEditLocal" text="Применить правки" />
+            <Button maxWidth="Infinity" onAction="#handleDeleteLocal" text="Удалить" />
+            <Button maxWidth="Infinity" onAction="#handleCancelEdit" text="Отменить изменения" />
 
-    <GridPane hgap="10" vgap="10" alignment="CENTER">
-        <TextField fx:id="txtSurname" GridPane.columnIndex="0" GridPane.rowIndex="0" promptText="Фамилия"/>
-        <TextField fx:id="txtName" GridPane.columnIndex="1" GridPane.rowIndex="0" promptText="Имя"/>
-        <TextField fx:id="txtPatronymic" GridPane.columnIndex="0" GridPane.rowIndex="1" promptText="Отчество"/>
-        <TextField fx:id="txtPhone" GridPane.columnIndex="1" GridPane.rowIndex="1" promptText="Телефон"/>
-    </GridPane>
+            <Button maxWidth="Infinity" onAction="#handleShowHierarchy" text="Обновить дерево связей">
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+            </Button>
+            <Button maxWidth="Infinity" onAction="#handleRefresh" text="Прочитать из БД" />
+            <Button maxWidth="Infinity" onAction="#handleSaveToDb" text="Сохранить в БД" />
+        </VBox>
 
-    <Button text="Добавить клиента" onAction="#handleAddClient" prefWidth="250"/>
-</VBox>
+        <VBox spacing="10" />
+    </VBox>
+</HBox>
