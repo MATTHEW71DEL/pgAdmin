@@ -1,22 +1,40 @@
 package org.matv.db;
 
 import org.matv.model.Client;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class DbManager {
-    private final static String URL = "jdbc:postgresql://localhost:5432/ShopDB";
-    private final static String USER = "postgres";
-    private final static String PASSWORD = "2006ukt,";
+    private static Map<String, Object> config;
+
+    static {
+        Yaml yaml = new Yaml();
+        try (InputStream in = DbManager.class
+                .getClassLoader()
+                .getResourceAsStream("properties.yml")) {
+            config = yaml.load(in);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private final static String SELECT_ALL_CLIENTS = "SELECT * FROM clients";
     private final static String COUNT_CLIENTS = "SELECT COUNT(*) FROM clients";
     private final static String CALL_INSERT_PROC = "CALL insert_client_proc(?, ?, ?, ?, ?)";
 
     private Connection getNewConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+        Map<String, String> dbSettings = (Map<String, String>) config.get("db");
+
+        return DriverManager.getConnection(
+                dbSettings.get("url"),
+                dbSettings.get("username"),
+                dbSettings.get("password")
+        );
     }
 
     public List<Client> readTableClients() throws SQLException {

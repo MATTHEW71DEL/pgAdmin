@@ -1,0 +1,4 @@
+db:
+  url: "jdbc:postgresql://localhost:5432/ShopDB"
+  username: "postgres"
+  password: "2006ukt,"

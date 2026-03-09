@@ -13,6 +13,7 @@ module matvLabs {
     requires java.sql;
     requires org.postgresql.jdbc;
     requires static lombok;
+    requires org.yaml.snakeyaml;
 
     // Разрешаем JavaFX доступ к вашим пакетам (через рефлексию)
     // Это критично для работы @FXML и контроллеров
