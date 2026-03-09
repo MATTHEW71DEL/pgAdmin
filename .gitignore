@@ -1,0 +1,12 @@
+src/main/resources/properties.yml
+
+target/
+build/
+*.class
+
+.idea/
+*.iml
+
+.vscode/
+
+*.log
